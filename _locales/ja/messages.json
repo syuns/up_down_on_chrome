@@ -1,0 +1,6 @@
+{
+  "description": {
+    "message": "閲覧中のサイトの親へ移動することを可能にします。そのサイトのルートにいる場合、閲覧履歴から子を含むポップアップを表示します。",
+    "description": "short description"
+  }
+}

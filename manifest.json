@@ -1,0 +1,21 @@
+{
+  "name": "Up Down",
+  "version": "1.2.0",
+  "default_locale": "en",
+  "description": "__MSG_description__",
+  "icons": {
+     "32": "images/up32.png",
+     "48": "images/up48.png",
+     "64": "images/up64.png"
+  },
+  "browser_action": {
+    "default_icon": "images/up32.png",
+    "default_title": "Up Down"
+  },
+  "background_page": "views/background.html",
+  "options_page": "views/options.html",
+  "permissions": [
+    "tabs",
+    "history"
+  ]
+}

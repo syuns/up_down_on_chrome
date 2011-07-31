@@ -1,0 +1,67 @@
+<script>
+var _tabId;
+
+function getTabId() {
+  return _tabId;
+}
+
+function load(storageKey) {
+  var value = localStorage[storageKey];
+
+  if (!value) {
+    var defaultValue;
+    if (storageKey == "sortKey") {
+      defaultValue = "url";
+    } else if (storageKey == "orderBy") {
+      defaultValue = "ascending";
+    }
+    value = defaultValue;
+  }
+
+  return value;
+}
+
+function getSlashLastIndexOf(url) {
+  var index;
+  if (url[url.length - 1] == '/') {
+    index = url.lastIndexOf("/", url.length - 2);
+  } else {
+    index = url.lastIndexOf("/");
+  }
+  if (url[index - 1] == '/') {
+    index = -1;
+  }
+  return index;
+}
+
+function changeIcon() {
+  chrome.tabs.get(_tabId, function(tab) {
+    if (getSlashLastIndexOf(tab.url) == -1) {
+      chrome.browserAction.setPopup({ popup: "/views/popup.html" });
+      chrome.browserAction.setIcon({ path: "/images/down32.png" });
+    } else {
+      chrome.browserAction.setPopup({ popup: "" });
+      chrome.browserAction.setIcon({ path: "/images/up32.png" });
+    }
+  });
+}
+
+chrome.tabs.onSelectionChanged.addListener(function(tabid, selectinfo) {
+  _tabId = tabid;
+  changeIcon();
+});
+
+chrome.tabs.onUpdated.addListener(function(tabid, selectinfo, tab) {
+  _tabId = tabid;
+  changeIcon();
+});
+
+chrome.browserAction.onClicked.addListener(function(tab) {
+  var index = getSlashLastIndexOf(tab.url);
+  if (index != -1) {
+    var parentUrl = tab.url.substring(0, index + 1);
+    console.log("parentUrl: " + parentUrl);
+    chrome.tabs.update(tab.id, { url: parentUrl }, null);
+  }
+});
+</script>
