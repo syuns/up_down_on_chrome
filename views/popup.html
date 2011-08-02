@@ -1,90 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<style type="text/css">
-body {
-  font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
-  font-size: 75%;
-  max-width: 400px;
-  white-space: nowrap;  
-  overflow: none;
-}
-
-a {
-  display: block;
-  text-decoration: none;
-}
-
-a:visited {
-  color: blue;
-}
-
-a:hover {
-  background-color: LightCyan;
-}
-
-ul, li {
-  list-style-type: none;
-}
-</style>
-</head>
-</html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Style-type" content="text/css" />
+    <link rel="stylesheet" href="styles/popup.css" type="text/css" />
+    <script type="text/javascript" src="scripts/settings.js"></script>
+  </head>
 <body>
-<script type="text/javascript">
-function update(targetUrl) {
-  chrome.tabs.update(tabid, { url: targetUrl, selected: true }, null);
-}
-
-var bg = chrome.extension.getBackgroundPage();
-var tabid = bg.getTabId();
-
-chrome.tabs.get(tabid, function(tab) {
-  chrome.history.search({ text: "" }, function(results) {
-    var sortKey = bg.load("sortKey");
-    results.sort(function(a, b) {
-      return a[sortKey] > b[sortKey] ? 1 : -1;
-    });
-    if (bg.load("orderBy") == "descending") {
-      results.reverse();
-    }
-
-    var ul = document.createElement("ur");
-    var count = 0;
-    for (var i = 0; i < results.length; i++) {
-      if (results[i].title == "" ||
-          results[i].url.indexOf(tab.url) == -1 ||
-          results[i].url == tab.url)
-        continue;
-
-      var li = document.createElement("li");
-      var a = document.createElement("a");
-      a.href = "#";
-      a.setAttribute("onclick", "update(\'" + results[i].url + "\')");
-ls
-      a.setAttribute("oncontextmenu", "chrome.tabs.create( { url: \"" + results[i].url + "\", selected: true }, null)");
-      var urlsub = results[i].url.substring(tab.url.length);
-      if (sortKey == "url") {
-        a.innerText =  urlsub + " - [" + results[i].title + "]";
-        a.title = results[i].title;
-      } else if (sortKey == "title") {
-        a.innerText =  results[i].title + " - [" + urlsub + "]";
-        a.title = urlsub;
-      }
-      li.appendChild(a);
-      ul.appendChild(li);
-
-      count++;
-    }
-
-    if (count == 0) {
-      var p = document.createElement("p");
-      p.innerText = "no item";
-      document.body.appendChild(p);
-    } else {
-      document.body.appendChild(ul);
-    }
-  });
-});
-</script>
+<script type="text/javascript" src="scripts/list.js"></script>
 </body>
+</html>

@@ -1,75 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<style type="text/css">
-  /* Clone the look and feel of "chrome://" pages. */
-  body {
-    margin: 10px;
-    font: 84% Arial, sans-serif
-  }
-
-  h1 { font-size: 156% }
-
-  h1 img {
-    margin: 1px 5px 0 1px;
-    vertical-align: middle
-  }
-
-  h2 {
-    border-top: 1px solid #9cc2ef;
-    background-color: #ebeff9;
-    padding: 3px 5px;
-    font-size: 100%
-  }
-</style>
-<script type="text/javascript">
-function saveOptions() {
-  var select;
-
-  select = document.getElementById("sortKey");
-  localStorage["sortKey"] = select.children[select.selectedIndex].value;
-
-  select = document.getElementById("orderBy");
-  localStorage["orderBy"] = select.children[select.selectedIndex].value;
-}
-
-function load(storageKey, id) {
-  var bg = chrome.extension.getBackgroundPage();
-  var value = bg.load(storageKey);
-  var options = document.getElementById(id);
-  for (var i = 0; i < options.length; i++) {
-    if (options.children[i].value == value) {
-      options.children[i].selected = "true";
-      break;
-    }
-  }
-}
-
-function loadOptions() {
-  load("sortKey", "sortKey");
-  load("orderBy", "orderBy");
-}
-</script>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Style-type" content="text/css" />
+  <link rel="stylesheet" href="styles/options.css" type="text/css" />
+  <script type="text/javascript" src="scripts/settings.js"></script>
 </head>
 <body onload="loadOptions()">
 <h1>
 <img src="/images/up64.png" />
 Up Down
 </h1>
-<h2>Options</h2>
+<h2>
+Options
+<button onclick="saveOptions()">Save</button>
+</h2>
 Sort key:
 <select id="sortKey">
   <option value="url">url</option>
   <option value="title">title</option>
 </select>
 <br />
-Order by:
-<select id="orderBy">
-  <option value="ascending">ascending</option>
-  <option value="descending">descending</option>
-</select>
-<br />
-<button onclick="saveOptions()">Save</button>
+Is Ascending:
+<input id="isAscending" type="checkbox"></input>
 </body>
 </html>
