@@ -1,27 +1,21 @@
 var settings = {
     get sortKey() {
-	return localStorage["sortKey"] || "url";
+	    return localStorage["sortKey"] || "url";
     },
     set sortKey(value) {
-	localStorage["sortKey"] = value;
-    },
-    get orderBy() {
-	return localStorage["orderBy"] || "ascending";
-    },
-    set orderBy(value) {
-	localStorage["orderBy"] = value;
+	    localStorage["sortKey"] = value;
     },
     get isAscending() {
-	return (localStorage["isAscending"] || "") === "true";
+	    return (localStorage["isAscending"] || "true") === "true";
     },
     set isAscending(value) {
-	localStorage["isAscending"] = value;
+	    localStorage["isAscending"] = value;
     },
     get currentTabId() {
-	return parseInt(localStorage["currentTabId"]);
+	    return parseInt(localStorage["currentTabId"] || "0");
     },
     set currentTabId(value) {
-	localStorage["currentTabId"] = value;
+	    localStorage["currentTabId"] = value;
     }
 };
 
@@ -34,10 +28,10 @@ function saveOptions() {
 function load(value, id) {
     var options = document.getElementById(id);
     for (var i = 0; i < options.length; i++) {
-	if (options.children[i].value == value) {
-	    options.children[i].selected = "true";
-	    break;
-	}
+	    if (options.children[i].value == value) {
+	        options.children[i].selected = "true";
+	        break;
+	    }
     }
 }
 

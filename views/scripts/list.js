@@ -1,5 +1,5 @@
 function update(targetUrl) {
-    chrome.tabs.update(tabid, { url: targetUrl, selected: true }, null);
+    chrome.tabs.update(settings.currentTabId, { url: targetUrl, selected: true }, null);
 }
 
 chrome.tabs.get(settings.currentTabId, function (tab) {
